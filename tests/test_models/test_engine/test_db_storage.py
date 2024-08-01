@@ -93,9 +93,11 @@ class TestFileStorage(unittest.TestCase):
         """Test that get returns the correct object"""
         storage = DBStorage()
         storage.reload()
-        city = City("amongus")
-        self.storage.new(city)
-        same_city = self.storage.get(City, city.id)
+        state = State(name='samplestate')
+        storage.new(state)
+        city = City(name="amongus", state_id=state.id)
+        storage.new(city)
+        same_city = storage.get(City, city.id)
         self.assertEqual(city, same_city)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -103,5 +105,5 @@ class TestFileStorage(unittest.TestCase):
         """Test that get returns nothing on nonexistent"""
         storage = DBStorage()
         storage.reload()
-        nonexistent_city = self.storage.get(City, 'hallooo')
+        nonexistent_city = storage.get(City, 'hallooo')
         self.assertIsNone(nonexistent_city)
