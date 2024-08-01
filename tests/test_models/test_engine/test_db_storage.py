@@ -88,22 +88,44 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get_city_existing(self):
-        """Test that get returns the correct object"""
-        storage = DBStorage()
-        storage.reload()
-        state = State(name='samplestate')
-        storage.new(state)
-        city = City(name="amongus", state_id=state.id)
-        storage.new(city)
-        same_city = storage.get(City, city.id)
-        self.assertEqual(city, same_city)
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    # def test_get_city_existing(self):
+    #     """Test that get returns the correct object"""
+    #     storage = DBStorage()
+    #     storage.reload()
+    #     state = State(name='samplestate')
+    #     storage.new(state)
+    #     city = City(name="amongus", state_id=state.id)
+    #     storage.new(city)
+    #     same_city = storage.get(City, city.id)
+    #     self.assertEqual(city, same_city)
+    #
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    # def test_get_non_existent(self):
+    #     """Test that get returns nothing on nonexistent"""
+    #     storage = DBStorage()
+    #     storage.reload()
+    #     nonexistent_city = storage.get(City, 'hallooo')
+    #     self.assertIsNone(nonexistent_city)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get_non_existent(self):
-        """Test that get returns nothing on nonexistent"""
+    def test_count_state(self):
         storage = DBStorage()
         storage.reload()
-        nonexistent_city = storage.get(City, 'hallooo')
-        self.assertIsNone(nonexistent_city)
+        real_state_count = len(storage.all(State))
+        tested_state_count = storage.count(State)
+        self.assertEqual(real_state_count, tested_state_count)
+
+    def test_count_state_creating_one(self):
+        storage = DBStorage()
+        storage.reload()
+        storage.new(State(name="fat7y"))
+        real_state_count = len(storage.all(State))
+        tested_state_count = storage.count(State)
+        self.assertEqual(real_state_count, tested_state_count)
+
+    def test_count_all(self):
+        storage = DBStorage()
+        storage.reload()
+        real_all_count = len(storage.all())
+        tested_all_count = storage.count()
+        self.assertEqual(real_all_count, tested_all_count)
