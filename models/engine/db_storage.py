@@ -81,7 +81,7 @@ class DBStorage:
         return objs[0]
 
     def count(self, cls=None):
-        """counts all instances of a certain class"""
+        """counts all instances of a certain or all classes"""
         if cls:
             return self.__session.query(cls).count()
         count = 0
