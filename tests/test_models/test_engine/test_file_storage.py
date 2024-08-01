@@ -118,9 +118,11 @@ class TestFileStorage(unittest.TestCase):
     def test_get_city_existing(self):
         """Test that get returns the correct object"""
         storage = FileStorage()
-        city = City("amongus")
+        state = State(name='samplestate')
+        storage.new(state)
+        city = City(name="amongus", state_id=state.id)
         storage.new(city)
-        same_city = self.storage.get(City, city.id)
+        same_city = storage.get(City, city.id)
         self.assertEqual(city, same_city)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
