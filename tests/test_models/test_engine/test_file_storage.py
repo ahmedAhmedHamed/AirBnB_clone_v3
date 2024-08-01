@@ -113,3 +113,19 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_city_existing(self):
+        """Test that get returns the correct object"""
+        storage = FileStorage()
+        city = City("amongus")
+        storage.new(city)
+        same_city = self.storage.get(City, city.id)
+        self.assertEqual(city, same_city)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_non_existent(self):
+        """Test that get returns nothing on nonexistent"""
+        storage = FileStorage()
+        nonexistent_city = storage.get(City, 'hallooo')
+        self.assertIsNone(nonexistent_city)

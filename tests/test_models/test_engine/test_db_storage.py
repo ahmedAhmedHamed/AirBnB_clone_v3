@@ -7,6 +7,7 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
+from models.engine.db_storage import DBStorage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -86,3 +87,21 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_city_existing(self):
+        """Test that get returns the correct object"""
+        storage = DBStorage()
+        storage.reload()
+        city = City("amongus")
+        self.storage.new(city)
+        same_city = self.storage.get(City, city.id)
+        self.assertEqual(city, same_city)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_non_existent(self):
+        """Test that get returns nothing on nonexistent"""
+        storage = DBStorage()
+        storage.reload()
+        nonexistent_city = self.storage.get(City, 'hallooo')
+        self.assertIsNone(nonexistent_city)
