@@ -68,7 +68,8 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -76,7 +77,8 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -92,7 +94,8 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -112,7 +115,8 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_get_city_existing(self):
         """Test that get returns the correct object"""
         storage = FileStorage()
@@ -123,14 +127,16 @@ class TestFileStorage(unittest.TestCase):
         same_city = storage.get(City, city.id)
         self.assertEqual(city, same_city)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_get_non_existent(self):
         """Test that get returns nothing on nonexistent"""
         storage = FileStorage()
         nonexistent_city = storage.get(City, 'hallooo')
         self.assertIsNone(nonexistent_city)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_count_state(self):
         """Test that count returns the correct number of states"""
         storage = FileStorage()
@@ -138,7 +144,8 @@ class TestFileStorage(unittest.TestCase):
         tested_state_count = storage.count(State)
         self.assertEqual(real_state_count, tested_state_count)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_count_state_creating_one(self):
         """
         Test that count returns the correct number of states
@@ -150,7 +157,8 @@ class TestFileStorage(unittest.TestCase):
         tested_state_count = storage.count(State)
         self.assertEqual(real_state_count, tested_state_count)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(
+        models.storage_t == 'db', "not testing file storage")
     def test_count_all(self):
         """Test that count returns the correct number of all objects"""
         storage = FileStorage()
