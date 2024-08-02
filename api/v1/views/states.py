@@ -19,7 +19,7 @@ def get_all_states():
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_specific_state(state_id):
-    """gets all available states and returns them as a dict"""
+    """gets a specific state according to its id, or 404 on fail"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -28,7 +28,7 @@ def get_specific_state(state_id):
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
-    """gets all available states and returns them as a dict"""
+    """deletes a state according to its id, or 404 on fail"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -39,7 +39,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def post_state():
-    """gets all available states and returns them as a dict"""
+    """adds a new state, requires a name in a json"""
     try:
         data = request.get_json()
     except:
