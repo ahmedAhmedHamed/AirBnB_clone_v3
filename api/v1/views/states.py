@@ -50,3 +50,21 @@ def post_state():
     storage.new(newstate)
     storage.save()
     return newstate.to_dict(), 201
+
+
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
+def update_state(state_id):
+    """updates a new state given key value pairs"""
+    try:
+        data = request.get_json()
+    except:
+        abort(400, description="Not a JSON")
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
+    for key, value in data.items():
+        if key == "id" or key == "created_at" or key == "updated_at":
+            continue
+        setattr(state, key, value)
+    storage.save()
+    return state.to_dict(), 200
