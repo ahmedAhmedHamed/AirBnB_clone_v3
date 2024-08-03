@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """default rest api actions for amenity objects.
     """
+from flask import request, abort
+
 from api.v1.views import app_views
 from models.amenity import Amenity
 from api.v1.views.object_boilerplate import (get_all_of_class,
@@ -33,7 +35,15 @@ def delete_amenity(amenity_id):
 @app_views.route('/amenities', strict_slashes=False, methods=['POST'])
 def post_amenity():
     """adds a new amenity, requires a name in a json"""
-    return post_instance(Amenity)
+    try:
+        data = request.get_json()
+    except:
+        abort(400, description="Not a JSON")
+
+    if data.get('name', None) is None:
+        abort(400, description="Missing name")
+
+    return post_instance(Amenity, data)
 
 
 @app_views.route(
