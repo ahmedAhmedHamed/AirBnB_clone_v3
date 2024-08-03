@@ -5,13 +5,17 @@ from flask import abort, request
 from models import storage
 
 
-def get_all_of_class(cls):
-    """gets all available states and returns them as a dict"""
+def instance_list_to_dict_list(instance_list):
     ret = []
-    all_of_class = storage.all(cls)
-    for _, class_instance in all_of_class.items():
+    for _, class_instance in instance_list.items():
         ret.append(class_instance.to_dict())
     return ret
+
+
+def get_all_of_class(cls):
+    """gets all available states and returns them as a dict"""
+    all_of_class = storage.all(cls)
+    return instance_list_to_dict_list(all_of_class)
 
 
 def get_specific_instance(cls, instance_id):
