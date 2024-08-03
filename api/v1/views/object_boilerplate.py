@@ -36,7 +36,7 @@ def delete_instance(cls, instance_id):
     return {}
 
 
-def post_instance(cls):
+def post_instance(cls, **kwargs):
     """adds a new state, requires a name in a json"""
     try:
         data = request.get_json()
@@ -44,7 +44,7 @@ def post_instance(cls):
         abort(400, description="Not a JSON")
     if data.get('name', None) is None:
         abort(400, description="Missing name")
-    new_object = cls(name=data['name'])
+    new_object = cls(name=data['name'], **kwargs)
     storage.new(new_object)
     storage.save()
     return new_object.to_dict(), 201
