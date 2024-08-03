@@ -63,4 +63,5 @@ def post_place(city_id):
     '/places/<place_id>', strict_slashes=False, methods=['PUT'])
 def update_place(place_id):
     """updates a new place given key value pairs"""
-    return update_instance(Place, place_id)
+    ignored_keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
+    return update_instance(Place, place_id, ignored_keys)

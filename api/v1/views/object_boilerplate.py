@@ -44,8 +44,10 @@ def post_instance(cls, **kwargs):
     return new_object.to_dict(), 201
 
 
-def update_instance(cls, object_id):
+def update_instance(cls, object_id, ignore_list=None):
     """updates a new state given key value pairs"""
+    if ignore_list is None:
+        ignore_list = []
     try:
         data = request.get_json()
     except:
@@ -54,7 +56,7 @@ def update_instance(cls, object_id):
     if instance is None:
         return abort(404)
     for key, value in data.items():
-        if key == "id" or key == "created_at" or key == "updated_at":
+        if key in ignore_list:
             continue
         setattr(instance, key, value)
     storage.save()

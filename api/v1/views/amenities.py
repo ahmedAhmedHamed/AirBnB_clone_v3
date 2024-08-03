@@ -50,4 +50,5 @@ def post_amenity():
     '/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
 def update_amenity(amenity_id):
     """updates a new amenity given key value pairs"""
-    return update_instance(Amenity, amenity_id)
+    ignored_keys = ["id", "created_at", "updated_at"]
+    return update_instance(Amenity, amenity_id, ignored_keys)

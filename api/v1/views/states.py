@@ -47,4 +47,5 @@ def post_state():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def update_state(state_id):
     """updates a new state given key value pairs"""
-    return update_instance(State, state_id)
+    ignored_keys = ["id", "created_at", "updated_at"]
+    return update_instance(State, state_id, ignored_keys)
