@@ -4,10 +4,10 @@
 from api.v1.views import app_views
 from models.place import Place
 from api.v1.views.object_boilerplate import (instance_list_to_dict_list,
-                                                get_specific_instance,
-                                                delete_instance,
-                                                post_instance,
-                                                update_instance)
+                                             get_specific_instance,
+                                             delete_instance,
+                                             post_instance,
+                                             update_instance)
 from models import storage
 from models.city import City
 from flask import abort, request
@@ -39,7 +39,9 @@ def delete_place(place_id):
     """deletes an place according to its id, or 404 on fail"""
     return delete_instance(Place, place_id)
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+
+@app_views.route(
+    '/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
 def post_place(city_id):
     """adds a new place, requires a name in a json"""
     try:
