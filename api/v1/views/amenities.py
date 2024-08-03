@@ -43,7 +43,7 @@ def post_amenity():
     if data.get('name', None) is None:
         abort(400, description="Missing name")
 
-    return post_instance(Amenity, data)
+    return post_instance(Amenity, **data)
 
 
 @app_views.route(

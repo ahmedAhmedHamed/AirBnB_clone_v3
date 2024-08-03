@@ -56,7 +56,7 @@ def post_place(city_id):
         abort(400, description="Missing user_id")
     if data.get('name') is None:
         abort(400, description="Missing name")
-    return post_instance(Place, data)
+    return post_instance(Place, **data)
 
 
 @app_views.route(

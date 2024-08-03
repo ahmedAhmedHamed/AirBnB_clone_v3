@@ -41,7 +41,7 @@ def post_state():
     if data.get('name', None) is None:
         abort(400, description="Missing name")
 
-    return post_instance(State, data)
+    return post_instance(State, **data)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
