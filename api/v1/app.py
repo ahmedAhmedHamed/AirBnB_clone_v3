@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """ default entry point for the application
     """
-from flask import Flask, jsonify
-from models import storage
 from api.v1.views import app_views
-from os import getenv
+from flask import Flask, jsonify
 from flask_cors import CORS
+from models import storage
+from os import getenv
 
 app = Flask(__name__)
 CORS(app, origins=["0.0.0.0"])
