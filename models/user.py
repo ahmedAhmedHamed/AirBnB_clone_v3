@@ -41,9 +41,3 @@ class User(BaseModel, Base):
     def hash_password(password):
         """hashes password"""
         return hashlib.md5(password.encode('utf-8')).hexdigest()
-
-    def __setattr__(self, key, value):
-        """override for when changing password using this function"""
-        if key == 'password':
-            value = self.hash_password(value)
-        super(User, self).__setattr__(key, value)
