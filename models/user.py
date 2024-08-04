@@ -31,3 +31,16 @@ class User(BaseModel, Base):
             md5_hash.update(self.password.encode('utf8'))
             password = md5_hash.hexdigest()
             self.password = password
+
+    @password.setter
+    def password(self, value):
+        self.password = self.hash_password(value)
+
+    @staticmethod
+    def hash_password(password):
+        return hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+    def __setattr__(self, key, value):
+        if key == 'password':
+            value = self.hash_password(value)
+        super(User, self).__setattr__(key, value)
