@@ -31,13 +31,3 @@ class User(BaseModel, Base):
             md5_hash.update(self.password.encode('utf8'))
             password = md5_hash.hexdigest()
             self.password = password
-
-    @password.setter
-    def password(self, value):
-        """setter for password"""
-        self.password = self.hash_password(value)
-
-    @staticmethod
-    def hash_password(password):
-        """hashes password"""
-        return hashlib.md5(password.encode('utf-8')).hexdigest()
