@@ -34,13 +34,16 @@ class User(BaseModel, Base):
 
     @password.setter
     def password(self, value):
+        """setter for password"""
         self.password = self.hash_password(value)
 
     @staticmethod
     def hash_password(password):
-        return hashlib.sha256(password.encode('utf-8')).hexdigest()
+        """hashes password"""
+        return hashlib.md5(password.encode('utf-8')).hexdigest()
 
     def __setattr__(self, key, value):
+        """override for when changing password using this function"""
         if key == 'password':
             value = self.hash_password(value)
         super(User, self).__setattr__(key, value)
