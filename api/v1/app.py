@@ -8,9 +8,8 @@ from models import storage
 from os import getenv
 
 app = Flask(__name__)
-CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
-
 app.register_blueprint(app_views)
+CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
