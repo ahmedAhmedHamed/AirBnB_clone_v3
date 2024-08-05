@@ -6,12 +6,6 @@ from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 from models.place import Place
-from models.state import State
-from api.v1.views.object_boilerplate import (get_all_of_class,
-                                                get_specific_instance,
-                                                delete_instance,
-                                                post_instance,
-                                                update_instance)
 
 
 @app_views.route('/places/<place_id>/amenities',
@@ -56,5 +50,3 @@ def connect_amenity(place_id, amenity_id):
     place.amenities.append(amenity)
     storage.save()
     return {}, 200
-
-
