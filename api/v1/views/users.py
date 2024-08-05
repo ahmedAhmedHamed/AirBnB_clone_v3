@@ -11,8 +11,8 @@ from models.user import User
 def get_all_users():
     """ get the list of all user
     """
-    users = storage.all(User)
-    return jsonify([user.to_dict() for user in users])
+    user = storage.all(User).values()
+    return jsonify([user.to_dict() for user in user])
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False)
