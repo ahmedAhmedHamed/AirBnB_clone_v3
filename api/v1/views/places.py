@@ -3,11 +3,10 @@
     """
 from api.v1.views import app_views
 from models.place import Place
-from api.v1.views.object_boilerplate import (instance_list_to_dict_list,
-                                             get_specific_instance,
-                                             delete_instance,
-                                             post_instance,
-                                             update_instance)
+from api.v1.views.object_boilerplate import (
+    instance_list_to_dict_list, get_specific_instance,
+    delete_instance, post_instance, update_instance
+    )
 from models import storage
 from models.city import City
 from flask import abort, request
@@ -46,7 +45,7 @@ def post_place(city_id):
     """adds a new place, requires a name in a json"""
     try:
         data = request.get_json()
-    except:
+    except Exception:
         abort(400, description="Not a JSON")
     city: City = storage.get(City, city_id)
     if city is None:

@@ -15,6 +15,8 @@ def status():
 
 @app_views.route('/stats')
 def all_object_count():
+    """ Returns the number of objects
+    """
     ret = {}
     for class_name, class_type in classes.items():
         count = storage.count(class_type)

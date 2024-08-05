@@ -6,6 +6,8 @@ from models import storage
 
 
 def instance_list_to_dict_list(instance_list):
+    """ Return a list of instances
+    """
     ret = []
     for _, class_instance in instance_list.items():
         ret.append(class_instance.to_dict())
@@ -50,7 +52,7 @@ def update_instance(cls, object_id, ignore_list=None):
         ignore_list = []
     try:
         data = request.get_json()
-    except:
+    except Exception:
         abort(400, description="Not a JSON")
     instance = storage.get(cls, object_id)
     if instance is None:
