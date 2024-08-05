@@ -52,7 +52,7 @@ def update_instance(cls, object_id, ignore_list=None):
         ignore_list = []
     try:
         data = request.get_json()
-    except:
+    except Exception:
         abort(400, description="Not a JSON")
     instance = storage.get(cls, object_id)
     if instance is None:

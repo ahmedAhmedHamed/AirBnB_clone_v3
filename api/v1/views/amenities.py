@@ -5,11 +5,10 @@ from flask import request, abort
 
 from api.v1.views import app_views
 from models.amenity import Amenity
-from api.v1.views.object_boilerplate import (get_all_of_class,
-                                                get_specific_instance,
-                                                delete_instance,
-                                                post_instance,
-                                                update_instance)
+from api.v1.views.object_boilerplate import (
+    get_all_of_class, get_specific_instance, delete_instance,
+    post_instance, update_instance
+)
 
 
 @app_views.route('/amenities', strict_slashes=False, methods=['GET'])
@@ -37,7 +36,7 @@ def post_amenity():
     """adds a new amenity, requires a name in a json"""
     try:
         data = request.get_json()
-    except:
+    except Exception:
         abort(400, description="Not a JSON")
 
     if data.get('name', None) is None:

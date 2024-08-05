@@ -5,11 +5,13 @@ from api.v1.views import app_views
 from models import storage
 from models.user import User
 
+
 @app_views.route('/users', strict_slashes=False)
 def get_all_users():
     """ get the list of all users """
     users = storage.all(User).values()
     return jsonify([user.to_dict() for user in users])
+
 
 @app_views.route('/users/<string:user_id>', strict_slashes=False)
 def get_user(user_id):
@@ -19,7 +21,9 @@ def get_user(user_id):
         abort(404)
     return jsonify(user.to_dict())
 
-@app_views.route('/users/<string:user_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/users/<string:user_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_user(user_id):
     """ delete a user """
     user = storage.get(User, user_id)
@@ -28,6 +32,7 @@ def delete_user(user_id):
     storage.delete(user)
     storage.save()
     return jsonify({}), 200
+
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
@@ -43,7 +48,9 @@ def create_user():
     user.save()
     return jsonify(user.to_dict()), 201
 
-@app_views.route('/users/<string:user_id>', methods=['PUT'], strict_slashes=False)
+
+@app_views.route('/users/<string:user_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_user(user_id):
     """ update a user """
     user = storage.get(User, user_id)
