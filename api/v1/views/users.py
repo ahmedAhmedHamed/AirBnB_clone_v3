@@ -14,7 +14,7 @@ def get_all_users():
     return jsonify([user.to_dict() for user in users])
 
 
-@app_views.route('/users<user_id>', strict_slashes=False)
+@app_views.route('/users/<string:user_id>', strict_slashes=False)
 def get_user(user_id):
     """ get a specific user
     """
@@ -24,7 +24,7 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users<user_id>', methods=['DELETE'],
+@app_views.route('/users/<string:user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
     """ delete a user
@@ -38,7 +38,7 @@ def delete_user(user_id):
         return jsonify({}), 200
 
 
-@app_views.route('/users<user_id>', methods=['POST'],
+@app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
 def create_user(user_id):
     """ create a new user
@@ -57,7 +57,7 @@ def create_user(user_id):
     return jsonify(user.to_dict()), 200
 
 
-@app_views.route('/users<user_id>', methods=['PUT'],
+@app_views.route('/users/<string:user_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
     """ update a user
