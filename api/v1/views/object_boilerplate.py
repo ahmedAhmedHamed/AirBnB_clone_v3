@@ -6,6 +6,8 @@ from models import storage
 
 
 def instance_list_to_dict_list(instance_list):
+    """ Return a list of instances
+    """
     ret = []
     for _, class_instance in instance_list.items():
         ret.append(class_instance.to_dict())
