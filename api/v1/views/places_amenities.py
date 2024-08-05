@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """default rest api actions for state objects.
     """
-from flask import abort, request
+from flask import abort, request, jsonify
 from api.v1.views import app_views
 from models import storage
+from models.amenity import Amenity
+from models.place import Place
 from models.state import State
 from api.v1.views.object_boilerplate import (get_all_of_class,
                                                 get_specific_instance,
@@ -14,39 +16,45 @@ from api.v1.views.object_boilerplate import (get_all_of_class,
 
 @app_views.route('/places/<place_id>/amenities',
                  strict_slashes=False, methods=['GET'])
-def get_all_states():
-    """gets all available states and returns them as a dict"""
-    return get_all_of_class(State)
+def get_all_place_amenities(place_id):
+    """gets all available amenities of a place"""
+    place = storage.get(Place, place_id)
+    if not place:
+        return abort(404)
+    amenities = [amenity.to_dict() for amenity in place.amenities]
+    return jsonify(amenities)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
-def get_specific_state(state_id):
-    """gets a specific state according to its id, or 404 on fail"""
-    return get_specific_instance(State, state_id)
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['GET'])
+def delete_place_amenity(place_id, amenity_id):
+    """deletes an amenity of a space"""
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
+        abort(404)
+    if amenity not in place.amenities:
+        abort(404)
+    storage.delete(amenity)
+    storage.save()
+    return {}, 200
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
-def delete_state(state_id):
-    """deletes a state according to its id, or 404 on fail"""
-    return delete_instance(State, state_id)
+@app_views.route('/places/<place_id>/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+def connect_amenity(place_id, amenity_id):
+    """connects a place with an amenity"""
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
+        abort(404)
+    if amenity in place.amenities:
+        return {}, 200
+    place.amenities.append(amenity)
+    storage.save()
+    return {}, 200
 
 
-@app_views.route('/states', strict_slashes=False, methods=['POST'])
-def post_state():
-    """adds a new state, requires a name in a json"""
-    try:
-        data = request.get_json()
-    except:
-        abort(400, description="Not a JSON")
-
-    if data.get('name', None) is None:
-        abort(400, description="Missing name")
-
-    return post_instance(State, **data)
-
-
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
-def update_state(state_id):
-    """updates a new state given key value pairs"""
-    ignored_keys = ["id", "created_at", "updated_at"]
-    return update_instance(State, state_id, ignored_keys)
