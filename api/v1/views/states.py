@@ -3,7 +3,6 @@
     """
 from flask import abort, request
 from api.v1.views import app_views
-from models import storage
 from models.state import State
 from api.v1.views.object_boilerplate import (
     get_all_of_class, get_specific_instance,
