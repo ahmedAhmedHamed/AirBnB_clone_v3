@@ -47,10 +47,10 @@ def post_place(city_id):
         data = request.get_json()
     except Exception:
         abort(400, description="Not a JSON")
-    city: City = storage.get(City, city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    user: User = storage.get(User, data.get('user_id'))
+    user = storage.get(User, data.get('user_id'))
     if user is None:
         abort(400, description="Missing user_id")
     if data.get('name') is None:
