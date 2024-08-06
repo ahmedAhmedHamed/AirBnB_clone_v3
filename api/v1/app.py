@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-""" default entry point for the application
-    """
+"""
+default entry point for the application
+"""
 from api.v1.views import app_views
 from flask import Flask, jsonify
 from flask_cors import CORS
