@@ -18,7 +18,7 @@ from models.user import User
     '/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
 def get_all_related_places(city_id):
     """gets all available places and returns them as a dict"""
-    city: City = storage.get(City, city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     places = city.places
