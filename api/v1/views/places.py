@@ -22,7 +22,10 @@ def get_all_related_places(city_id):
     if city is None:
         abort(404)
     places = city.places
-    return instance_list_to_dict_list(places)
+    ret = []
+    for place in places:
+        ret.append(place.to_dict())
+    return ret
 
 
 @app_views.route(
