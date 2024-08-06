@@ -36,7 +36,8 @@ def delete_place_amenity(place_id, amenity_id):
     return {}, 200
 
 
-@app_views.route('/places/<place_id>/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/places/<place_id>/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['PUT'])
 def connect_amenity(place_id, amenity_id):
     """connects a place with an amenity"""
     place = storage.get(Place, place_id)
