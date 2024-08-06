@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Default REST API actions for User objects."""
+"""
+    Default REST API actions for User objects.
+"""
 from flask import abort, request, jsonify
 from api.v1.views import app_views
 from models import storage
